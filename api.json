@@ -1,0 +1,407 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "An awesome api!",
+        "version": "1.0"
+    },
+    "paths": {
+        "/api/basket/add": {
+            "post": {
+                "tags": [
+                    "Basket"
+                ],
+                "summary": "Add a product to the shopping basket",
+                "operationId": "7f71d90527f6b0894d749185edca176a",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ProductRequestDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Product added successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Added successfully."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "errors": {
+                                            "type": "string",
+                                            "example": "Missing productUuid or userId"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Product not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Product not found."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/{user}/basket": {
+            "get": {
+                "tags": [
+                    "Basket"
+                ],
+                "summary": "Get a basket with products by user",
+                "operationId": "3ee08f1964c1ee7ef4479a9a05be82ad",
+                "responses": {
+                    "200": {
+                        "description": "A basket with the products",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BasketResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User has no basket yet.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "errors": {
+                                            "type": "string",
+                                            "example": "User has no basket yet."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/baskets-stats": {
+            "get": {
+                "tags": [
+                    "Basket"
+                ],
+                "summary": "Get baskets stats",
+                "operationId": "427ad48ab6d1500d41d9a49cad6e030f",
+                "responses": {
+                    "200": {
+                        "description": "The stats of a basket",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BasketsStatsResponseDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/health": {
+            "get": {
+                "summary": "Check the health of the API",
+                "description": "This endpoint is used to verify the health and status of the API.",
+                "operationId": "08ccd3d647f9c2762600e3fe51b1358c",
+                "responses": {
+                    "200": {
+                        "description": "API is healthy",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "ok"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/basket/remove": {
+            "post": {
+                "tags": [
+                    "Basket"
+                ],
+                "summary": "Remove a product from the shopping basket",
+                "operationId": "a1be4259c17af31592f754a21f08ea4b",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ProductRequestDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Product removed successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Removed successfully."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "errors": {
+                                            "type": "string",
+                                            "example": "Missing productUuid or userId"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Product not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Product not found."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ComicPriceDTO": {
+                "title": "ComicPriceDTO",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "example": "digitalPrice"
+                    },
+                    "price": {
+                        "type": "number",
+                        "format": "float",
+                        "example": "20.50",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "ProductRequestDTO": {
+                "title": "ProductRequestDTO",
+                "properties": {
+                    "uuid": {
+                        "type": "string",
+                        "example": "70f281e5-1d79-4d95-8272-5115fd7d3d99"
+                    },
+                    "userId": {
+                        "type": "integer",
+                        "example": 1
+                    }
+                },
+                "type": "object"
+            },
+            "BasketItemResponseDTO": {
+                "title": "ItemResponseDTO",
+                "properties": {
+                    "uuid": {
+                        "type": "string",
+                        "example": "70f281e5-1d79-4d95-8272-5115fd7d3d99"
+                    },
+                    "product": {
+                        "$ref": "#/components/schemas/ProductResponseDTO"
+                    },
+                    "addedAt": {
+                        "type": "DateTimeImmutable",
+                        "example": "2021-10-10T12:00:00+00:00"
+                    }
+                },
+                "type": "object"
+            },
+            "BasketRemovedItemResponseDTO": {
+                "title": "BasketRemovedItemResponseDTO",
+                "properties": {
+                    "uuid": {
+                        "type": "string",
+                        "example": "70f281e5-1d79-4d95-8272-5115fd7d3d99"
+                    },
+                    "product": {
+                        "$ref": "#/components/schemas/ProductResponseDTO"
+                    },
+                    "removedAt": {
+                        "type": "DateTimeImmutable",
+                        "example": "2021-10-10T12:00:00+00:00"
+                    }
+                },
+                "type": "object"
+            },
+            "BasketResponseDTO": {
+                "title": "BasketResponseDTO",
+                "properties": {
+                    "uuid": {
+                        "type": "string",
+                        "example": "70f281e5-1d79-4d95-8272-5115fd7d3d99"
+                    },
+                    "userId": {
+                        "type": "string",
+                        "example": "70f281e5-1d79-4d95-8272-5115fd7d3d99"
+                    },
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/BasketItemResponseDTO"
+                        }
+                    },
+                    "count": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "total": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 20.5
+                    }
+                },
+                "type": "object"
+            },
+            "BasketStatsResponseDTO": {
+                "title": "BasketStatsResponseDTO",
+                "properties": {
+                    "uuid": {
+                        "type": "string",
+                        "example": "70f281e5-1d79-4d95-8272-5115fd7d3d99"
+                    },
+                    "userId": {
+                        "type": "string",
+                        "example": "1"
+                    },
+                    "removedItems": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/BasketRemovedItemResponseDTO"
+                        }
+                    },
+                    "count": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "total": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 20.5
+                    }
+                },
+                "type": "object"
+            },
+            "BasketsStatsResponseDTO": {
+                "title": "BasketsResponseDTO",
+                "properties": {
+                    "basketsStats": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/BasketStatsResponseDTO"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "PriceResponseDTO": {
+                "title": "PriceResponseDTO",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "example": "digitalPrice"
+                    },
+                    "amount": {
+                        "type": "number",
+                        "format": "float",
+                        "example": "20.50"
+                    }
+                },
+                "type": "object"
+            },
+            "ProductResponseDTO": {
+                "title": "ProductResponseDTO",
+                "properties": {
+                    "uuid": {
+                        "type": "string",
+                        "example": "70f281e5-1d79-4d95-8272-5115fd7d3d99"
+                    },
+                    "title": {
+                        "type": "string",
+                        "example": "An awesome comic"
+                    },
+                    "prices": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/PriceResponseDTO"
+                        }
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Basket",
+            "description": "Basket"
+        }
+    ]
+}
